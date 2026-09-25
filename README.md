@@ -2,7 +2,7 @@
 
 Turn any GitHub repository URL into an interactive, AI-generated architecture diagram — in seconds, with no signup.
 
-Paste a repo URL → an AI pipeline reads the codebase and produces a Mermaid architecture diagram, a plain-language explanation of how the components talk to each other, and clickable nodes that jump straight to the source file.
+Paste a repo URL → an AI pipeline reads the codebase and produces a Mermaid architecture diagram and a plain-language explanation of how the components talk to each other.
 
 ## Mission & Objective
 
