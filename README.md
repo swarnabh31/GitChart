@@ -1,6 +1,6 @@
 # GitChart
 
-Turn any GitHub repository URL into an interactive, AI-generated architecture diagram — in seconds, with no signup.
+Turn any GitHub repository URL into an AI-generated architecture diagram — in seconds, with no signup.
 
 Paste a repo URL → an AI pipeline reads the codebase and produces a Mermaid architecture diagram and a plain-language explanation of how the components talk to each other.
 
@@ -14,8 +14,7 @@ Paste a repo URL → an AI pipeline reads the codebase and produces a Mermaid ar
 1. **Repository input** — accepts any `https://github.com/owner/repo` URL (trailing `/tree/...` paths are tolerated and stripped).
 2. **AI codebase analysis** — the server builds a size-capped digest (file tree + key file excerpts), sends it to an AI model, and receives a valid Mermaid `graph TD` diagram plus per-component summaries. The Mermaid output is statically validated before it's accepted.
 3. **Streamed explanation** — the explanation streams to the browser (SSE) while the diagram is being generated, so you see understanding build up in real time.
-4. **Jump to code** — every diagram node carries a `file_path` and links to the exact file on GitHub (or raw).
-5. **Portable export** — download a crisp PNG, copy the raw Mermaid, or download a `.mmd` file — for embedding in docs, PRs, or ADRs.
+4. **Portable export** — download a crisp PNG, copy the raw Mermaid, or download a `.mmd` file — for embedding in docs, PRs, or ADRs.
 6. **Smart caching** — successful results are cached in Redis (default 24h TTL). Revisiting the same repo returns the cached diagram with no new AI cost; a "Regenerate" button forces a fresh run.
 
 ### Target users
@@ -96,7 +95,7 @@ GitHub tokens for the *server's own* GitHub API quota (`GITHUB_PAT`) are optiona
 4. *(Optional, Ollama only)* pick a local model from the **Local model** dropdown — the list is fetched live from your Ollama server.
 5. Hit **Generate diagram**. The explanation streams in under the form; when the diagram is ready it renders inline with:
    - **Repo card** — description, language, stars, forks (best-effort).
-   - **Interactive Mermaid diagram** — click any node to open the backing source file on GitHub in a new tab.
+    - **Mermaid diagram** — rendered client-side and sanitized with DOMPurify.
    - **Component list** — each component's summary with a link to its file.
    - **Export toolbar** — *Download PNG*, *Copy Mermaid*, *Download .mmd*, *Regenerate*.
 6. **Generate another** (top-left of the result view) takes you back to the form.
@@ -121,7 +120,7 @@ Errors are structured: `{ "error": { "code", "message" } }` with `422` (invalid 
 - **No accounts or saved collections** — diagrams are cached server-side (24h) but not tied to users; there is no dashboard or history page.
 - **Single-repo scope** — no monorepo sub-scoping, no multi-repo diff views.
 - **Diagram depth** — the AI is asked for 5–12 architectural components; very large or very complex codebases get an overview-level diagram, not an exhaustive one.
-- **AI accuracy is not guaranteed** — component summaries are AI-generated; always verify via the jump-to-code links.
+- **AI accuracy is not guaranteed** — component summaries are AI-generated; always verify via the file links in the component list.
 - **Client-side PNG export** — PNGs are rendered in the browser (no server-side rasterizer), so quality depends on your browser.
 - **No i18n** — the UI ships in English only.
 
